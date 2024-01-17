@@ -25,7 +25,6 @@ displayedDate.innerHTML = `${day} ${hours}:${minutes}`;
 function displayCity(event) {
   event.preventDefault();
   let searchInput = document.querySelector("#typed-city");
-
   searchCity(searchInput.value);
 }
 
@@ -45,5 +44,5 @@ function displayTemp(response) {
 
   let tempElement = document.querySelector("#current-temp");
   let temp = Math.round(response.data.temperature.current);
-  tempElement.innerHTML = temp;
+  tempElement.innerHTML = `/ ${temp} °C /`;
 }
