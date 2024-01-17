@@ -7,7 +7,7 @@ let days = [
   "Wednesday",
   "Thursday",
   "Friday",
-  "Saturday"
+  "Saturday",
 ];
 let day = days[now.getDay()];
 let hours = now.getHours();
@@ -25,21 +25,25 @@ displayedDate.innerHTML = `${day} ${hours}:${minutes}`;
 function displayCity(event) {
   event.preventDefault();
   let searchInput = document.querySelector("#typed-city");
-  let displayedCity = document.querySelector("#displayedcity");
-  displayedCity.innerHTML = `${searchInput.value}`;
+
+  searchCity(searchInput.value);
+}
+
+function searchCity(city) {
+  let apiKey = "4454f13co397b7eaaf38b607eb9367t6";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
+
+  axios.get(apiUrl).then(displayTemp);
 }
 
 let form = document.querySelector("#city-form");
 form.addEventListener("submit", displayCity);
 
+function displayTemp(response) {
+  let displayedCity = document.querySelector("#displayedcity");
+  displayedCity.innerHTML = response.data.city;
 
-function displayTemp(response){
   let tempElement = document.querySelector("#current-temp");
-  let temp = Math.round (response.data.temperature.current);
+  let temp = Math.round(response.data.temperature.current);
+  tempElement.innerHTML = temp;
 }
-
-let searchStuff = document.querySelector("typed-city");
-let apiKey = "4454f13co397b7eaaf38b607eb9367t6"
-let apiUrl = 'https://api.shecodes.io/weather/v1/current?query=${searchStuff.value}&key=${apiKey}'
-
-axios.get(apiUrl).then(displayTemp);
